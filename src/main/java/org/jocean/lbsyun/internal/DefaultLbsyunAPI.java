@@ -17,6 +17,7 @@ import rx.functions.Func1;
 
 public class DefaultLbsyunAPI implements LbsyunAPI {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG =
             LoggerFactory.getLogger(DefaultLbsyunAPI.class);
 
@@ -28,10 +29,11 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
         this._timeout = timeout;
     }
 
+    @Value("${api.timeout}")
     private long _timeout;
 
-    @Value("${ip.baiduAK}")
-    private String ak;
+    @Value("${api.baiduak}")
+    private String _ak;
 
 	@Override
     public Func1<Interact, Observable<IpResponse>> ip2location(final String ip) {
@@ -40,7 +42,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                  return interact.feature(Feature.ENABLE_LOGGING)
                          .uri(PATH_DOMAIN).path(PATH_QUERY2IP)
                          .paramAsQuery("ip", ip)
-                         .paramAsQuery("ak", ak)
+                         .paramAsQuery("_ak", _ak)
                          .execution()
                          .compose(MessageUtil.responseAs(IpResponse.class, MessageUtil::unserializeAsJson))
 //                         .map(response -> {
