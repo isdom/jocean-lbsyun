@@ -42,7 +42,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                  return interact.feature(Feature.ENABLE_LOGGING)
                          .uri(PATH_DOMAIN).path(PATH_QUERY2IP)
                          .paramAsQuery("ip", ip)
-                         .paramAsQuery("_ak", _ak)
+                         .paramAsQuery("ak", this._ak)
                          .execution()
                          .compose(MessageUtil.responseAs(IpResponse.class, MessageUtil::unserializeAsJson))
 //                         .map(response -> {
