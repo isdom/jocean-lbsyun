@@ -30,7 +30,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     }
 
     @Value("${api.timeout}")
-    private long _timeout;
+    private long _timeout = 5;
 
     @Value("${api.baiduak}")
     private String _ak;
