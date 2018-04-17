@@ -4,38 +4,37 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class ContentResponse {
 
-	private AddressResponse address_details;
-	private String address;
-	private PointResponse point;
-	@JSONField(name = "address_details" )
-	public AddressResponse getAddress_details() {
-		return address_details;
+	@JSONField(name = "address_detail" )
+	public AddressResponse getAddressDetail() {
+		return _addressDetail;
 	}
-	@JSONField(name = "address_details" )
-	public void setAddress_details(final AddressResponse address_details) {
-		this.address_details = address_details;
+	@JSONField(name = "address_detail" )
+	public void setAddressDetail(final AddressResponse addressDetail) {
+		this._addressDetail = addressDetail;
 	}
 	@JSONField(name = "address" )
 	public String getAddress() {
-		return address;
+		return _address;
 	}
 	@JSONField(name = "address" )
 	public void setAddress(final String address) {
-		this.address = address;
+		this._address = address;
 	}
 	@JSONField(name = "point" )
 	public PointResponse getPoint() {
-		return point;
+		return _point;
 	}
 	@JSONField(name = "point" )
 	public void setPoint(final PointResponse point) {
-		this.point = point;
+		this._point = point;
 	}
 	@Override
 	public String toString() {
-		return "ContentResponse [address_details=" + address_details + ", address=" + address + ", point=" + point
+		return "ContentResponse [addressDetail=" + _addressDetail + ", address=" + _address + ", point=" + _point
 				+ "]";
 	}
 
-
+    private AddressResponse _addressDetail;
+    private String _address;
+    private PointResponse _point;
 }
