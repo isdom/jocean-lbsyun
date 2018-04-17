@@ -36,24 +36,26 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     private String _ak;
 
 	@Override
-    public Func1<Interact, Observable<IpResponse>> ip2location(final String ip) {
+    public Func1<Interact, Observable<IpResponse>> ip2location(final String ip, final String coor) {
+	//  .map(response -> {
+	//  if (null == response || !"0000".equals(((IpResponse)response).getCode())) {
+//	      LOG.error("BdlbsSPIImpl {} failed {} -> {}", "/location/ip", JSON.toJSONString(ip), JSON.toJSONString(response));
+//	      return null;
+	//  } else {
+//	      return response;
+	//  }
+	//})
         return interact -> {
             try {
-                 return interact.feature(Feature.ENABLE_LOGGING)
-                         .uri(PATH_DOMAIN).path(PATH_QUERY2IP)
-                         .paramAsQuery("ip", ip)
-                         .paramAsQuery("ak", this._ak)
-                         .execution()
-                         .compose(MessageUtil.responseAs(IpResponse.class, MessageUtil::unserializeAsJson))
-//                         .map(response -> {
-//                                if (null == response || !"0000".equals(((IpResponse)response).getCode())) {
-//                                    LOG.error("BdlbsSPIImpl {} failed {} -> {}", "/location/ip", JSON.toJSONString(ip), JSON.toJSONString(response));
-//                                    return null;
-//                                } else {
-//                                    return response;
-//                                }
-//                            })
-                         .timeout(this._timeout, TimeUnit.SECONDS);
+                interact.feature(Feature.ENABLE_LOGGING).uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip)
+                        .paramAsQuery("ak", this._ak);
+                if (null != coor) {
+                    interact.paramAsQuery("coor", coor);
+                }
+
+                return interact.execution()
+                        .compose(MessageUtil.responseAs(IpResponse.class, MessageUtil::unserializeAsJson))
+                        .timeout(this._timeout, TimeUnit.SECONDS);
             } catch (final Exception e) {
                 return Observable.error(e);
             }
