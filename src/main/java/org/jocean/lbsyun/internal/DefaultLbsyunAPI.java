@@ -7,6 +7,7 @@ import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
 import org.jocean.lbsyun.spi.IpResponse;
+import org.jocean.lbsyun.spi.StatusResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 
     private static final String PATH_DOMAIN= "http://api.map.baidu.com";
     private static final String PATH_QUERY2IP = "/location/ip";
-//    private static final String PATH_QUERY2LOCATION = "/geocoder/v2/";
+    private static final String PATH_QUERY2LOCATION = "/geocoder/v2/";
 
     public void setTimeout(final long timeout) {
         this._timeout = timeout;
@@ -61,4 +62,24 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
             }
         };
 	}
+
+    @Override
+    public Func1<Interact, Observable<StatusResponse>> location2address(final String location) {
+        return interact -> {
+            try {
+                 return interact.feature(Feature.ENABLE_LOGGING)
+                         .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
+                         .paramAsQuery("location", location)
+                         .paramAsQuery("ak", this._ak)
+                         .paramAsQuery("output", "json")
+                         .paramAsQuery("pois", "0")
+                         .execution()
+                         .compose(MessageUtil.responseAs(StatusResponse.class, MessageUtil::unserializeAsJson))
+                         .timeout(this._timeout, TimeUnit.SECONDS);
+            } catch (final Exception e) {
+                return Observable.error(e);
+            }
+        };
+    }
+
 }

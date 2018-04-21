@@ -1,13 +1,11 @@
 package org.jocean.lbsyun.spi;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class LocationResponse implements Serializable {
+public class LocationResponse {
 
-    private static final long serialVersionUID = -6109848942202149446L;
     public  Location location;
     private String formatted_address;
     private String business;
@@ -21,7 +19,7 @@ public class LocationResponse implements Serializable {
 		return location;
 	}
     @JSONField(name = "location" )
-	public void setLocation(Location location) {
+	public void setLocation(final Location location) {
 		this.location = location;
 	}
     @JSONField(name = "formatted_address" )
@@ -29,7 +27,7 @@ public class LocationResponse implements Serializable {
 		return formatted_address;
 	}
     @JSONField(name = "formatted_address" )
-	public void setFormatted_address(String formatted_address) {
+	public void setFormatted_address(final String formatted_address) {
 		this.formatted_address = formatted_address;
 	}
     @JSONField(name = "business" )
@@ -37,7 +35,7 @@ public class LocationResponse implements Serializable {
 		return business;
 	}
     @JSONField(name = "business")
-	public void setBusiness(String business) {
+	public void setBusiness(final String business) {
 		this.business = business;
 	}
     @JSONField(name = "addressComponent" )
@@ -45,7 +43,7 @@ public class LocationResponse implements Serializable {
 		return addressComponent;
 	}
     @JSONField(name = "addressComponent" )
-	public void setAddressComponent(AddressComponent addressComponent) {
+	public void setAddressComponent(final AddressComponent addressComponent) {
 		this.addressComponent = addressComponent;
 	}
     @JSONField(name = "sematic_description" )
@@ -53,7 +51,7 @@ public class LocationResponse implements Serializable {
 		return sematic_description;
 	}
     @JSONField(name = "sematic_description" )
-	public void setSematic_description(String sematic_description) {
+	public void setSematic_description(final String sematic_description) {
 		this.sematic_description = sematic_description;
 	}
     @JSONField(name = "cityCode" )
@@ -61,7 +59,7 @@ public class LocationResponse implements Serializable {
 		return cityCode;
 	}
     @JSONField(name = "cityCode" )
-	public void setCityCode(String cityCode) {
+	public void setCityCode(final String cityCode) {
 		this.cityCode = cityCode;
 	}
     @JSONField(name = "poiRegions" )
@@ -69,7 +67,7 @@ public class LocationResponse implements Serializable {
 		return poiRegions;
 	}
     @JSONField(name = "poiRegions" )
-	public void setPoiRegions(List<PoiRegin> poiRegions) {
+	public void setPoiRegions(final List<PoiRegin> poiRegions) {
 		this.poiRegions = poiRegions;
 	}
     @JSONField(name = "pois" )
@@ -77,10 +75,10 @@ public class LocationResponse implements Serializable {
 		return pois;
 	}
     @JSONField(name = "pois" )
-	public void setPois(List<Poi> pois) {
+	public void setPois(final List<Poi> pois) {
 		this.pois = pois;
 	}
-    
-    
-    
+
+
+
 }
