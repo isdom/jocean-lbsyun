@@ -6,7 +6,7 @@ import org.jocean.http.Feature;
 import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
-import org.jocean.lbsyun.spi.IpResponse;
+import org.jocean.lbsyun.spi.PositionResponse;
 import org.jocean.lbsyun.spi.StatusResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +37,9 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     private String _ak;
 
 	@Override
-    public Func1<Interact, Observable<IpResponse>> ip2location(final String ip, final String coor) {
+    public Func1<Interact, Observable<PositionResponse>> ip2position(final String ip, final String coor) {
 	//  .map(response -> {
-	//  if (null == response || !"0000".equals(((IpResponse)response).getCode())) {
+	//  if (null == response || !"0000".equals(((PositionResponse)response).getCode())) {
 //	      LOG.error("BdlbsSPIImpl {} failed {} -> {}", "/location/ip", JSON.toJSONString(ip), JSON.toJSONString(response));
 //	      return null;
 	//  } else {
@@ -55,7 +55,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                 }
 
                 return interact.execution()
-                        .compose(MessageUtil.responseAs(IpResponse.class, MessageUtil::unserializeAsJson))
+                        .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson))
                         .timeout(this._timeout, TimeUnit.SECONDS);
             } catch (final Exception e) {
                 return Observable.error(e);

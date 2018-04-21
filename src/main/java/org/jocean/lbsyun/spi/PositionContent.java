@@ -2,14 +2,14 @@ package org.jocean.lbsyun.spi;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class ContentResponse {
+public class PositionContent {
 
 	@JSONField(name = "address_detail" )
-	public AddressResponse getAddressDetail() {
+	public AddressDetail getAddressDetail() {
 		return _addressDetail;
 	}
 	@JSONField(name = "address_detail" )
-	public void setAddressDetail(final AddressResponse addressDetail) {
+	public void setAddressDetail(final AddressDetail addressDetail) {
 		this._addressDetail = addressDetail;
 	}
 	@JSONField(name = "address" )
@@ -21,20 +21,20 @@ public class ContentResponse {
 		this._address = address;
 	}
 	@JSONField(name = "point" )
-	public PointResponse getPoint() {
+	public LocationPoint getPoint() {
 		return _point;
 	}
 	@JSONField(name = "point" )
-	public void setPoint(final PointResponse point) {
+	public void setPoint(final LocationPoint point) {
 		this._point = point;
 	}
 	@Override
 	public String toString() {
-		return "ContentResponse [addressDetail=" + _addressDetail + ", address=" + _address + ", point=" + _point
+		return "PositionContent [addressDetail=" + _addressDetail + ", address=" + _address + ", point=" + _point
 				+ "]";
 	}
 
-    private AddressResponse _addressDetail;
+    private AddressDetail _addressDetail;
     private String _address;
-    private PointResponse _point;
+    private LocationPoint _point;
 }

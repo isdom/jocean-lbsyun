@@ -2,7 +2,7 @@ package org.jocean.lbsyun.spi;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class AddressResponse {
+public class AddressDetail {
 	private String province;
 	private String city;
 	private String district;

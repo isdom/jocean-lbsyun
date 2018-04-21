@@ -2,7 +2,7 @@ package org.jocean.lbsyun.spi;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class PointResponse {
+public class LocationPoint {
 	private String y;
 	private String x;
 	
@@ -24,7 +24,7 @@ public class PointResponse {
 	}
 	@Override
 	public String toString() {
-		return "PointResponse [y=" + y + ", x=" + x + "]";
+		return "LocationPoint [y=" + y + ", x=" + x + "]";
 	}
 	
 }

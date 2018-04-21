@@ -2,7 +2,7 @@ package org.jocean.lbsyun.spi;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class IpResponse {
+public class PositionResponse {
 
     @JSONField(name = "address" )
 	public String getAddress() {
@@ -21,19 +21,19 @@ public class IpResponse {
 		this.status = status;
 	}
     @JSONField(name = "content" )
-	public ContentResponse getContent() {
+	public PositionContent getContent() {
 		return content;
 	}
     @JSONField(name = "content" )
-	public void setContent(final ContentResponse content) {
+	public void setContent(final PositionContent content) {
 		this.content = content;
 	}
 	@Override
 	public String toString() {
-		return "IpResponse [address=" + address + ", status=" + status + ", content=" + content + "]";
+		return "PositionResponse [address=" + address + ", status=" + status + ", content=" + content + "]";
 	}
 
     private String address;
     private String status;
-    private ContentResponse content;
+    private PositionContent content;
 }

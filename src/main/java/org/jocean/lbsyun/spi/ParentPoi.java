@@ -6,7 +6,7 @@ public class ParentPoi {
 	private String name;
 	private String tag;
 	private String addr;
-	private PointResponse point;
+	private LocationPoint point;
 	private String direction;
 	private String distance;
 	private String uid;
@@ -35,11 +35,11 @@ public class ParentPoi {
 		this.addr = addr;
 	}
 	@JSONField(name = "point" )
-	public PointResponse getPoint() {
+	public LocationPoint getPoint() {
 		return point;
 	}
 	@JSONField(name = "point" )
-	public void setPoint(PointResponse point) {
+	public void setPoint(LocationPoint point) {
 		this.point = point;
 	}
 	@JSONField(name = "direction" )

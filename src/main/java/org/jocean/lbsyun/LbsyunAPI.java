@@ -1,7 +1,7 @@
 package org.jocean.lbsyun;
 
 import org.jocean.http.Interact;
-import org.jocean.lbsyun.spi.IpResponse;
+import org.jocean.lbsyun.spi.PositionResponse;
 import org.jocean.lbsyun.spi.StatusResponse;
 
 import rx.Observable;
@@ -13,7 +13,7 @@ public interface LbsyunAPI {
     public static final String COOR_BD09LL = "bd09ll";
     public static final String COOR_GCJ02 = "gcj02";
 
-	public Func1<Interact, Observable<IpResponse>> ip2location(final String ip, final String coor);
+	public Func1<Interact, Observable<PositionResponse>> ip2position(final String ip, final String coor);
 
     public Func1<Interact, Observable<StatusResponse>> location2address(final String location);
 }
