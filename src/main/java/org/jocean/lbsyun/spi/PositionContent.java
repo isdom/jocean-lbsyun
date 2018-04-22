@@ -30,7 +30,7 @@ public class PositionContent {
 	}
 	@Override
 	public String toString() {
-		return "PositionContent [addressDetail=" + _addressDetail + ", address=" + _address + ", point=" + _point
+		return "Content [addressDetail=" + _addressDetail + ", address=" + _address + ", point=" + _point
 				+ "]";
 	}
 

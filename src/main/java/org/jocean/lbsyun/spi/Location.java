@@ -5,7 +5,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class Location {
 
-	@JSONField(name = "lat" )
+	@Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("[lat=").append(lat).append(", lng=").append(lng).append("]");
+        return builder.toString();
+    }
+
+    @JSONField(name = "lat" )
 	public float getLat() {
 		return lat;
 	}
