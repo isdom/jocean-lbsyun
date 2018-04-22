@@ -6,8 +6,8 @@ import org.jocean.http.Feature;
 import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
+import org.jocean.lbsyun.spi.AddressResponse;
 import org.jocean.lbsyun.spi.PositionResponse;
-import org.jocean.lbsyun.spi.StatusResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,7 +64,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 	}
 
     @Override
-    public Func1<Interact, Observable<StatusResponse>> location2address(final String location) {
+    public Func1<Interact, Observable<AddressResponse>> location2address(final String location) {
         return interact -> {
             try {
                  return interact.feature(Feature.ENABLE_LOGGING)
@@ -74,7 +74,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                          .paramAsQuery("output", "json")
                          .paramAsQuery("pois", "0")
                          .execution()
-                         .compose(MessageUtil.responseAs(StatusResponse.class, MessageUtil::unserializeAsJson))
+                         .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson))
                          .timeout(this._timeout, TimeUnit.SECONDS);
             } catch (final Exception e) {
                 return Observable.error(e);
