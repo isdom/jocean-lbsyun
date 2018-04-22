@@ -31,11 +31,11 @@ public class ParentPoi {
 	}
 
 	@JSONField(name = "point" )
-	public LocationPoint getPoint() {
+	public X_Y getPoint() {
 		return point;
 	}
 	@JSONField(name = "point" )
-	public void setPoint(final LocationPoint point) {
+	public void setPoint(final X_Y point) {
 		this.point = point;
 	}
 
@@ -69,7 +69,7 @@ public class ParentPoi {
     private String name;
     private String tag;
     private String addr;
-    private LocationPoint point;
+    private X_Y point;
     private String direction;
     private String distance;
     private String uid;

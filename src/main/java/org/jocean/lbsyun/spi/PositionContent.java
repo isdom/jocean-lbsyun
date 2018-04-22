@@ -21,11 +21,11 @@ public class PositionContent {
 		this._address = address;
 	}
 	@JSONField(name = "point" )
-	public LocationPoint getPoint() {
+	public X_Y getPoint() {
 		return _point;
 	}
 	@JSONField(name = "point" )
-	public void setPoint(final LocationPoint point) {
+	public void setPoint(final X_Y point) {
 		this._point = point;
 	}
 	@Override
@@ -36,5 +36,5 @@ public class PositionContent {
 
     private AddressDetail _addressDetail;
     private String _address;
-    private LocationPoint _point;
+    private X_Y _point;
 }
