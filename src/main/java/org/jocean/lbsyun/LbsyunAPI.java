@@ -15,5 +15,5 @@ public interface LbsyunAPI {
 
 	public Func1<Interact, Observable<PositionResponse>> ip2position(final String ip, final String coor);
 
-    public Func1<Interact, Observable<AddressResponse>> location2address(final String location);
+    public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor);
 }

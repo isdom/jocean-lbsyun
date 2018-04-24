@@ -64,16 +64,20 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 	}
 
     @Override
-    public Func1<Interact, Observable<AddressResponse>> location2address(final String location) {
+    public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor) {
         return interact -> {
             try {
-                 return interact.feature(Feature.ENABLE_LOGGING)
+                 interact.feature(Feature.ENABLE_LOGGING)
                          .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
                          .paramAsQuery("location", location)
                          .paramAsQuery("ak", this._ak)
                          .paramAsQuery("output", "json")
-                         .paramAsQuery("pois", "0")
-                         .execution()
+                         .paramAsQuery("pois", "0");
+                 if (null != coor) {
+                     interact.paramAsQuery("ret_coordtype", coor);
+                 }
+
+                 return interact.execution()
                          .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson))
                          .timeout(this._timeout, TimeUnit.SECONDS);
             } catch (final Exception e) {
