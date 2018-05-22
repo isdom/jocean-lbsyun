@@ -2,7 +2,6 @@ package org.jocean.lbsyun.internal;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jocean.http.Feature;
 import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
@@ -48,8 +47,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 	//})
         return interact -> {
             try {
-                interact.feature(Feature.ENABLE_LOGGING).uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip)
-                        .paramAsQuery("ak", this._ak);
+                interact.uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip).paramAsQuery("ak", this._ak);
                 if (null != coor) {
                     interact.paramAsQuery("coor", coor);
                 }
@@ -67,12 +65,12 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor) {
         return interact -> {
             try {
-                 interact.feature(Feature.ENABLE_LOGGING)
-                         .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
-                         .paramAsQuery("location", location)
-                         .paramAsQuery("ak", this._ak)
-                         .paramAsQuery("output", "json")
-                         .paramAsQuery("pois", "0");
+                 interact
+                     .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
+                     .paramAsQuery("location", location)
+                     .paramAsQuery("ak", this._ak)
+                     .paramAsQuery("output", "json")
+                     .paramAsQuery("pois", "0");
                  if (null != coor) {
                      interact.paramAsQuery("ret_coordtype", coor);
                  }
