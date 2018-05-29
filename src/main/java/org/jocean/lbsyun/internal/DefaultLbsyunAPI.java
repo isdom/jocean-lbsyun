@@ -1,7 +1,5 @@
 package org.jocean.lbsyun.internal;
 
-import java.util.concurrent.TimeUnit;
-
 import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
@@ -25,13 +23,6 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     private static final String PATH_QUERY2IP = "/location/ip";
     private static final String PATH_QUERY2LOCATION = "/geocoder/v2/";
 
-    public void setTimeout(final long timeout) {
-        this._timeout = timeout;
-    }
-
-    @Value("${api.timeout}")
-    private long _timeout = 5;
-
     @Value("${api.baiduak}")
     private String _ak;
 
@@ -46,41 +37,31 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 	//  }
 	//})
         return interact -> {
-            try {
-                interact.uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip).paramAsQuery("ak", this._ak);
-                if (null != coor) {
-                    interact.paramAsQuery("coor", coor);
-                }
-
-                return interact.execution()
-                        .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson))
-                        .timeout(this._timeout, TimeUnit.SECONDS);
-            } catch (final Exception e) {
-                return Observable.error(e);
+            interact.uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip).paramAsQuery("ak", this._ak);
+            if (null != coor) {
+                interact.paramAsQuery("coor", coor);
             }
+
+            return interact.execution()
+                .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson));
         };
 	}
 
     @Override
     public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor) {
         return interact -> {
-            try {
-                 interact
-                     .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
-                     .paramAsQuery("location", location)
-                     .paramAsQuery("ak", this._ak)
-                     .paramAsQuery("output", "json")
-                     .paramAsQuery("pois", "0");
-                 if (null != coor) {
-                     interact.paramAsQuery("ret_coordtype", coor);
-                 }
+             interact
+             .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
+             .paramAsQuery("location", location)
+             .paramAsQuery("ak", this._ak)
+             .paramAsQuery("output", "json")
+             .paramAsQuery("pois", "0");
+             if (null != coor) {
+                 interact.paramAsQuery("ret_coordtype", coor);
+             }
 
-                 return interact.execution()
-                         .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson))
-                         .timeout(this._timeout, TimeUnit.SECONDS);
-            } catch (final Exception e) {
-                return Observable.error(e);
-            }
+             return interact.execution()
+                 .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson));
         };
     }
 
