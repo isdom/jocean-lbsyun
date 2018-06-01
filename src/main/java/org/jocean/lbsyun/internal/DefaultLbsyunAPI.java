@@ -3,8 +3,6 @@ package org.jocean.lbsyun.internal;
 import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
 import org.jocean.lbsyun.LbsyunAPI;
-import org.jocean.lbsyun.spi.AddressResponse;
-import org.jocean.lbsyun.spi.PositionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
