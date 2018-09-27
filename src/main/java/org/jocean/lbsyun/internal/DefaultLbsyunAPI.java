@@ -1,14 +1,13 @@
 package org.jocean.lbsyun.internal;
 
-import org.jocean.http.Interact;
 import org.jocean.http.MessageUtil;
+import org.jocean.http.RpcRunner;
 import org.jocean.lbsyun.LbsyunAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import rx.Observable;
-import rx.functions.Func1;
+import rx.Observable.Transformer;
 
 
 public class DefaultLbsyunAPI implements LbsyunAPI {
@@ -25,29 +24,21 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
     private String _ak;
 
 	@Override
-    public Func1<Interact, Observable<PositionResponse>> ip2position(final String ip, final String coor) {
-	//  .map(response -> {
-	//  if (null == response || !"0000".equals(((PositionResponse)response).getCode())) {
-//	      LOG.error("BdlbsSPIImpl {} failed {} -> {}", "/location/ip", JSON.toJSONString(ip), JSON.toJSONString(response));
-//	      return null;
-	//  } else {
-//	      return response;
-	//  }
-	//})
-        return interact -> {
+    public Transformer<RpcRunner, PositionResponse> ip2position(final String ip, final String coor) {
+        return rpcs -> rpcs.flatMap(rpc -> rpc.execute(interact -> {
             interact.uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip).paramAsQuery("ak", this._ak);
             if (null != coor) {
                 interact.paramAsQuery("coor", coor);
             }
 
             return interact.execution()
-                .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson));
-        };
+                    .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson));
+        }));
 	}
 
     @Override
-    public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor) {
-        return interact -> {
+    public Transformer<RpcRunner, AddressResponse> location2address(final String location, final String coor) {
+        return rpcs -> rpcs.flatMap(rpc -> rpc.execute(interact -> {
              interact
              .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
              .paramAsQuery("location", location)
@@ -60,7 +51,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 
              return interact.execution()
                  .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson));
-        };
+        }));
     }
 
 }

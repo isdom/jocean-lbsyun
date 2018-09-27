@@ -1,11 +1,10 @@
 package org.jocean.lbsyun;
 
-import org.jocean.http.Interact;
+import org.jocean.http.RpcRunner;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import rx.Observable;
-import rx.functions.Func1;
+import rx.Observable.Transformer;
 
 
 public interface LbsyunAPI {
@@ -90,7 +89,7 @@ public interface LbsyunAPI {
         public void setContent(final PositionContent content);
     }
 
-    public Func1<Interact, Observable<PositionResponse>> ip2position(final String ip, final String coor);
+    public Transformer<RpcRunner, PositionResponse> ip2position(final String ip, final String coor);
 
     public interface AddressComponent {
         @JSONField(name = "province" )
@@ -324,5 +323,5 @@ public interface LbsyunAPI {
         @JSONField(name = "result" )
         public void setResult(final AddressResult result);
     }
-    public Func1<Interact, Observable<AddressResponse>> location2address(final String location, final String coor);
+    public Transformer<RpcRunner, AddressResponse> location2address(final String location, final String coor);
 }
