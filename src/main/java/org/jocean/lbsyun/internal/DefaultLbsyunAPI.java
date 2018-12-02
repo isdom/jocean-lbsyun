@@ -25,7 +25,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 
 	@Override
     public Transformer<RpcRunner, PositionResponse> ip2position(final String ip, final String coor) {
-        return rpcs -> rpcs.flatMap(rpc -> rpc.execute(interact -> {
+        return runners -> runners.flatMap(runner -> runner.name("lbsyun.ip2position").execute(interact -> {
             interact.uri(PATH_DOMAIN).path(PATH_QUERY2IP).paramAsQuery("ip", ip).paramAsQuery("ak", this._ak);
             if (null != coor) {
                 interact.paramAsQuery("coor", coor);
@@ -38,7 +38,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
 
     @Override
     public Transformer<RpcRunner, AddressResponse> location2address(final String location, final String coor) {
-        return rpcs -> rpcs.flatMap(rpc -> rpc.execute(interact -> {
+        return runners -> runners.flatMap(runner -> runner.name("lbsyun.location2address").execute(interact -> {
              interact
              .uri(PATH_DOMAIN).path(PATH_QUERY2LOCATION)
              .paramAsQuery("location", location)
