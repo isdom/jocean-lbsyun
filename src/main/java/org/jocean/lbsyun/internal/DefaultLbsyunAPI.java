@@ -1,6 +1,6 @@
 package org.jocean.lbsyun.internal;
 
-import org.jocean.http.MessageUtil;
+import org.jocean.http.ContentUtil;
 import org.jocean.http.RpcRunner;
 import org.jocean.lbsyun.LbsyunAPI;
 import org.slf4j.Logger;
@@ -31,8 +31,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                 interact.paramAsQuery("coor", coor);
             }
 
-            return interact.execution()
-                    .compose(MessageUtil.responseAs(PositionResponse.class, MessageUtil::unserializeAsJson));
+            return interact.responseAs(ContentUtil.ASJSON, PositionResponse.class);
         }));
 	}
 
@@ -49,8 +48,7 @@ public class DefaultLbsyunAPI implements LbsyunAPI {
                  interact.paramAsQuery("ret_coordtype", coor);
              }
 
-             return interact.execution()
-                 .compose(MessageUtil.responseAs(AddressResponse.class, MessageUtil::unserializeAsJson));
+             return interact.responseAs(ContentUtil.ASJSON, AddressResponse.class);
         }));
     }
 
