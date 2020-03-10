@@ -1,6 +1,13 @@
 package org.jocean.lbsyun;
 
-import org.jocean.http.RpcRunner;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.jocean.http.Interact;
+import org.jocean.rpc.annotation.ConstParams;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -11,6 +18,10 @@ public interface LbsyunAPI {
 
     public static final String COOR_BD09LL = "bd09ll";
     public static final String COOR_GCJ02 = "gcj02";
+
+    static final String PATH_DOMAIN= "http://api.map.baidu.com";
+    static final String PATH_QUERY2IP = "/location/ip";
+    static final String PATH_QUERY2LOCATION = "/geocoder/v2/";
 
     public interface StatusResponse {
         @JSONField(name = "status" )
@@ -89,7 +100,21 @@ public interface LbsyunAPI {
         public void setContent(final PositionContent content);
     }
 
-    public Transformer<RpcRunner, PositionResponse> ip2position(final String ip, final String coor);
+    interface Ip2positionBuilder {
+        @QueryParam("ip")
+        Ip2positionBuilder ip(final String ip);
+
+        @QueryParam("coor")
+        Ip2positionBuilder coor(final String coor);
+
+        @GET
+        @Path(PATH_DOMAIN + PATH_QUERY2IP)
+        @Consumes(MediaType.APPLICATION_JSON)
+        public Transformer<Interact, PositionResponse> call();
+    }
+
+    // http://lbsyun.baidu.com/index.php?title=webapi/ip-api
+    public Ip2positionBuilder ip2position();
 
     public interface AddressComponent {
         @JSONField(name = "province" )
@@ -323,5 +348,22 @@ public interface LbsyunAPI {
         @JSONField(name = "result" )
         public void setResult(final AddressResult result);
     }
-    public Transformer<RpcRunner, AddressResponse> location2address(final String location, final String coor);
+
+    // http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding-abroad
+    //  TODO: 注意：当前为V3.0版本接口文档，V2.0及以前版本自2019.6.18起新用户无法使用。
+    //          老用户仍可继续使用V2.0及以前版本请求实现逆地理编码服务，为保障用户体验，建议您尽快迁移到V3.0版本。
+    interface Location2addressBuilder {
+        @QueryParam("location")
+        Location2addressBuilder location(final String location);
+
+        @QueryParam("ret_coordtype")
+        Location2addressBuilder coor(final String coor);
+
+        @GET
+        @Path(PATH_DOMAIN + PATH_QUERY2LOCATION)
+        @Consumes(MediaType.APPLICATION_JSON)
+        @ConstParams({"output", "json", "pois", "0"})
+        public Transformer<Interact, AddressResponse> call();
+    }
+    public Location2addressBuilder location2address();
 }

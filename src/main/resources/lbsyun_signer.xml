@@ -4,6 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
-    <bean id="lbsyunapi" class="org.jocean.lbsyun.internal.DefaultLbsyunAPI"/>
+    <bean id="lbsyunapi" class="org.jocean.lbsyun.internal.DefaultLbsyunSigner"/>
 
 </beans>
