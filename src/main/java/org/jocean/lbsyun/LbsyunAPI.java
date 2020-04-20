@@ -6,13 +6,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.jocean.http.Interact;
 import org.jocean.rpc.annotation.ConstParams;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import rx.Observable.Transformer;
-
+import rx.Observable;
 
 public interface LbsyunAPI {
 
@@ -110,7 +108,7 @@ public interface LbsyunAPI {
         @GET
         @Path(PATH_DOMAIN + PATH_QUERY2IP)
         @Consumes(MediaType.APPLICATION_JSON)
-        public Transformer<Interact, PositionResponse> call();
+        public Observable<PositionResponse> call();
     }
 
     // http://lbsyun.baidu.com/index.php?title=webapi/ip-api
@@ -363,7 +361,7 @@ public interface LbsyunAPI {
         @Path(PATH_DOMAIN + PATH_QUERY2LOCATION)
         @Consumes(MediaType.APPLICATION_JSON)
         @ConstParams({"output", "json", "pois", "0"})
-        public Transformer<Interact, AddressResponse> call();
+        public Observable<AddressResponse> call();
     }
     public Location2addressBuilder location2address();
 }
