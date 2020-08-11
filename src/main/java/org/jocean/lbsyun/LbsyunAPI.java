@@ -7,6 +7,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.jocean.rpc.annotation.ConstParams;
+import org.jocean.rpc.annotation.RpcBuilder;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -98,6 +99,7 @@ public interface LbsyunAPI {
         public void setContent(final PositionContent content);
     }
 
+    @RpcBuilder
     interface Ip2positionBuilder {
         @QueryParam("ip")
         Ip2positionBuilder ip(final String ip);
@@ -350,6 +352,7 @@ public interface LbsyunAPI {
     // http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding-abroad
     //  TODO: 注意：当前为V3.0版本接口文档，V2.0及以前版本自2019.6.18起新用户无法使用。
     //          老用户仍可继续使用V2.0及以前版本请求实现逆地理编码服务，为保障用户体验，建议您尽快迁移到V3.0版本。
+    @RpcBuilder
     interface Location2addressBuilder {
         @QueryParam("location")
         Location2addressBuilder location(final String location);
