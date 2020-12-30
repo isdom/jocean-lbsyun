@@ -6,14 +6,23 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.jocean.http.Interact;
 import org.jocean.rpc.annotation.ConstParams;
+import org.jocean.rpc.annotation.OnInteract;
 import org.jocean.rpc.annotation.RpcBuilder;
+import org.jocean.rpc.annotation.RpcResource;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 import rx.Observable;
+import rx.Observable.Transformer;
 
 public interface LbsyunAPI {
+
+    public interface LbsyunSignable<BUILDER> {
+        @RpcResource("signer")
+        BUILDER signer(final Transformer<Interact, Interact> signer);
+    }
 
     public static final String COOR_BD09LL = "bd09ll";
     public static final String COOR_GCJ02 = "gcj02";
@@ -100,7 +109,7 @@ public interface LbsyunAPI {
     }
 
     @RpcBuilder
-    interface Ip2positionBuilder {
+    interface Ip2positionBuilder extends LbsyunSignable<Ip2positionBuilder> {
         @QueryParam("ip")
         Ip2positionBuilder ip(final String ip);
 
@@ -110,6 +119,7 @@ public interface LbsyunAPI {
         @GET
         @Path(PATH_DOMAIN + PATH_QUERY2IP)
         @Consumes(MediaType.APPLICATION_JSON)
+        @OnInteract("signer")
         public Observable<PositionResponse> call();
     }
 
@@ -353,7 +363,7 @@ public interface LbsyunAPI {
     //  TODO: 注意：当前为V3.0版本接口文档，V2.0及以前版本自2019.6.18起新用户无法使用。
     //          老用户仍可继续使用V2.0及以前版本请求实现逆地理编码服务，为保障用户体验，建议您尽快迁移到V3.0版本。
     @RpcBuilder
-    interface Location2addressBuilder {
+    interface Location2addressBuilder extends LbsyunSignable<Location2addressBuilder> {
         @QueryParam("location")
         Location2addressBuilder location(final String location);
 
@@ -364,6 +374,7 @@ public interface LbsyunAPI {
         @Path(PATH_DOMAIN + PATH_QUERY2LOCATION)
         @Consumes(MediaType.APPLICATION_JSON)
         @ConstParams({"output", "json", "pois", "0"})
+        @OnInteract("signer")
         public Observable<AddressResponse> call();
     }
     public Location2addressBuilder location2address();
