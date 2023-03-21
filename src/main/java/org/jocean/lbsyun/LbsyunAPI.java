@@ -368,8 +368,14 @@ public interface LbsyunAPI {
         Location2addressBuilder location(final String location);
 
         @QueryParam("ret_coordtype")
-        Location2addressBuilder coor(final String coor);
+        Location2addressBuilder ret_coordtype(final String coor);
 
+        // https://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding-abroad
+        // coordtype	坐标的类型，目前支持的坐标类型包括：bd09ll（百度经纬度坐标）、bd09mc（百度米制坐标）、gcj02ll（国测局经纬度坐标，仅限中国）、wgs84ll（ GPS经纬度） 坐标系说明	string	
+        // bd09ll、gcj02ll	bd09ll
+        @QueryParam("coordtype")
+        Location2addressBuilder coordtype(final String coordtype);
+        
         @GET
         @Path(PATH_DOMAIN + PATH_QUERY2LOCATION)
         @Consumes(MediaType.APPLICATION_JSON)
